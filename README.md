@@ -1,2 +1,3 @@
 # readme-generator
-generates a readme file using user input
+
+generates a readme file by prompting the use for input
