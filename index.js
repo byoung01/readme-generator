@@ -49,33 +49,37 @@ inquirer
   ])
   .then(function (data) {
     console.log(data);
-    fs.writeFile(
-      `${data.title}.md`,
-      generateMarkdown(data),
-      function (err) {
-        if (err) return console.log(err);
-        console.log("Done!");
-      }
-      // fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
-      //   if (err) throw err;
-      //   console.log('Saved!');
-      // });
-    );
+    fs.writeFile(`${data.title}.md`, generateMarkdown(data), function (err) {
+      if (err) return console.log(err);
+      console.log("Done!");
+    });
   });
 function generateMarkdown(data) {
   return `# ${data.title}
+  
 
+  ## Description
   ${data.description}
-    
-  ${data.technology}
+  
 
-  ${data.usage}
+  ### Technology
+  - ${data.technology}
+  
 
-  ${data.license}
+  ### Usage
+  - ${data.usage}
 
-  ${data.Tests}
+  ### License
+  - ${data.license}
 
-  ${data.Questions}
+  ### Tests
+  - ${data.Tests}
+
+  ## Questions
+  - ${data.Questions}
+
+  ---
+  thanks
     `;
 }
 // GIVEN a command-line application that accepts user input
