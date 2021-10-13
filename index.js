@@ -3,6 +3,8 @@ console.clear();
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+// WHEN I enter a description, ç, usage information, contribution guidelines, and test instructions
+
 inquirer
   .prompt([
     {
@@ -28,8 +30,8 @@ inquirer
     {
       name: "license",
       message: "What is the license for this project",
-      type: "checkbox",
-      choices: ["MIT", "Artisitic", "GNU", "Apache"],
+      type: "list",
+      choices: ["MIT", "GNU", "Apache"],
     },
     {
       name: "Contributing",
@@ -46,16 +48,29 @@ inquirer
       message: "Message for users if they have any questions about project",
       type: "input",
     },
+    {
+      name: "Username",
+      message: "What is your github username",
+      type: "input",
+    },
+    {
+      name: "Email",
+      message: "please enter your email",
+      type: "input",
+    },
   ])
   .then(function (data) {
-    console.log(data);
     fs.writeFile(`${data.title}.md`, generateMarkdown(data), function (err) {
       if (err) return console.log(err);
       console.log("Done!");
     });
   });
+
 function generateMarkdown(data) {
-  return `# ${data.title}
+  return (
+    `# ${data.title}` +
+    license(data.license) +
+    `
   
 
   ## Description
@@ -76,11 +91,26 @@ function generateMarkdown(data) {
   - ${data.Tests}
 
   ## Questions
-  - ${data.Questions}
+  - [${data.Questions}]
 
   ---
-  thanks
-    `;
+  [${data.Username}](https://github.com/${data.Username}) ${data.Email}
+    `
+  );
+}
+
+function license(license) {
+  if (license === "MIT") {
+    return `<br>[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]`;
+  }
+  if (license === "GNU") {
+    return `<br>[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)]`;
+  }
+  if (license === "Apache") {
+    return `<br>[![License](https://img.shields.io/badge/License-Apache%201.0-red.svg)]`;
+  } else {
+    return;
+  }
 }
 // GIVEN a command-line application that accepts user input
 // WHEN I am prompted for information about my application repository
