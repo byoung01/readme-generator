@@ -3,8 +3,7 @@ console.clear();
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-// WHEN I enter a description, ç, usage information, contribution guidelines, and test instructions
-
+// inquirer to prompt the user for their inputs
 inquirer
   .prompt([
     {
@@ -59,13 +58,14 @@ inquirer
       type: "input",
     },
   ])
+  // taking data that the user inputs as data
   .then(function (data) {
     fs.writeFile(`${data.title}.md`, generateMarkdown(data), function (err) {
       if (err) return console.log(err);
       console.log("Done!");
     });
   });
-
+// function below generates what the user sees in the read me
 function generateMarkdown(data) {
   return (
     `# ${data.title}` +
@@ -92,13 +92,13 @@ function generateMarkdown(data) {
 
   ## Questions
   - [${data.Questions}]
-
+01
   ---
   [${data.Username}](https://github.com/${data.Username}) ${data.Email}
     `
   );
 }
-
+//function generates the license based off of what the user choose
 function license(license) {
   if (license === "MIT") {
     return `<br>[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]`;
@@ -112,18 +112,3 @@ function license(license) {
     return;
   }
 }
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for information about my application repository
-// THEN a high-quality, professional README.md is generated with the title of my project and sections entitled Description, Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
-// WHEN I enter my project title
-// THEN this is displayed as the title of the README
-// WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions
-// THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-// WHEN I choose a license for my application from a list of options
-// THEN a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-// WHEN I enter my GitHub username
-// THEN this is added to the section of the README entitled Questions, with a link to my GitHub profile
-// WHEN I enter my email address
-// THEN this is added to the section of the README entitled Questions, with instructions on how to reach me with additional questions
-// WHEN I click on the links in the Table of Contents
-// THEN I am taken to the corresponding section of the README
